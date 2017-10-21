@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DLProgress	../helper.py	/^class DLProgress(tqdm):$/;"	kind:class	line:15
+TESTS_ENABLED	../main.py	/^TESTS_ENABLED = False$/;"	kind:variable	line:9
+TmpMock	../project_tests.py	/^class TmpMock(object):$/;"	kind:class	line:41
+__enter__	../project_tests.py	/^    def __enter__(self):$/;"	kind:member	line:51
+__exit__	../project_tests.py	/^    def __exit__(self, type, value, traceback):$/;"	kind:member	line:54
+__init__	../project_tests.py	/^    def __init__(self, module, attrib_name):$/;"	kind:member	line:45
+_assert_tensor_shape	../project_tests.py	/^def _assert_tensor_shape(tensor, shape, display_name):$/;"	kind:function	line:30
+_prevent_print	../project_tests.py	/^def _prevent_print(function, params):$/;"	kind:function	line:24
+func_wrapper	../project_tests.py	/^    def func_wrapper(*args):$/;"	kind:function	line:15
+gen_batch_function	../helper.py	/^def gen_batch_function(data_folder, image_shape):$/;"	kind:function	line:61
+gen_test_output	../helper.py	/^def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape):$/;"	kind:function	line:101
+get_batches_fn	../helper.py	/^    def get_batches_fn(batch_size):$/;"	kind:function	line:68
+get_batches_fn	../project_tests.py	/^    def get_batches_fn(batach_size_parm):$/;"	kind:function	line:118
+helper.py	../helper.py	1;"	kind:file	line:1
+hook	../helper.py	/^    def hook(self, block_num=1, block_size=1, total_size=None):$/;"	kind:member	line:18
+last_block	../helper.py	/^    last_block = 0$/;"	kind:variable	line:16
+layers	../main.py	/^def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):$/;"	kind:function	line:49
+load_vgg	../main.py	/^def load_vgg(sess, vgg_path):$/;"	kind:function	line:22
+main.py	../main.py	1;"	kind:file	line:1
+maybe_download_pretrained_vgg	../helper.py	/^def maybe_download_pretrained_vgg(data_dir):$/;"	kind:function	line:24
+optimize	../main.py	/^def optimize(nn_last_layer, correct_label, learning_rate, num_classes):$/;"	kind:function	line:87
+project_tests.py	../project_tests.py	1;"	kind:file	line:1
+run	../main.py	/^def run():$/;"	kind:function	line:153
+save_inference_samples	../helper.py	/^def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image):$/;"	kind:function	line:128
+test_for_kitti_dataset	../project_tests.py	/^def test_for_kitti_dataset(data_dir):$/;"	kind:function	line:144
+test_layers	../project_tests.py	/^def test_layers(layers):$/;"	kind:function	line:84
+test_load_vgg	../project_tests.py	/^def test_load_vgg(load_vgg, tf_module):$/;"	kind:function	line:59
+test_optimize	../project_tests.py	/^def test_optimize(optimize):$/;"	kind:function	line:95
+test_safe	../project_tests.py	/^def test_safe(func):$/;"	kind:function	line:11
+test_train_nn	../project_tests.py	/^def test_train_nn(train_nn):$/;"	kind:function	line:114
+train_nn	../main.py	/^def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,$/;"	kind:function	line:109
