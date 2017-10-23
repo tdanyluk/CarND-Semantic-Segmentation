@@ -56,27 +56,32 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
 
-    b = 1e-3
     layer = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, 1, padding = 'same', 
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     layer = tf.layers.conv2d_transpose(layer, num_classes, 4, 2, padding='same',
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     other = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, 1, padding = 'same', 
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     layer = tf.add(layer, other)
     layer = tf.layers.conv2d_transpose(layer, num_classes, 4, 2, padding='same',
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     other = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, 1, padding = 'same', 
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     layer = tf.add(layer, other)
     layer = tf.layers.conv2d_transpose(layer, num_classes, 4, 2, padding='same',
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     layer = tf.layers.conv2d_transpose(layer, num_classes, 4, 2, padding='same',
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
     layer = tf.layers.conv2d_transpose(layer, num_classes, 4, 2, padding='same',
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
-    layer = tf.layers.conv2d(layer, num_classes, 8, 1, padding='same',
-                                kernel_regularizer=tf.contrib.layers.l2_regularizer(b))
+                                kernel_regularizer=tf.contrib.layers.l2_regularizer(1.0),
+                                kernel_initializer=tf.contrib.layers.xavier_initializer())
 
     return layer
 
@@ -96,11 +101,13 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
     one_hot_y = correct_label
     logits =  tf.reshape(nn_last_layer, (-1, num_classes))
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=one_hot_y))
+    reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
+    loss = cross_entropy_loss + 1e-3 * sum(reg_losses)
 
     optimizer = tf.train.AdamOptimizer(learning_rate = learning_rate)
-    train_op = optimizer.minimize(cross_entropy_loss)
+    train_op = optimizer.minimize(loss)
 
-    return logits, train_op, cross_entropy_loss
+    return logits, train_op, loss
 
 if TESTS_ENABLED:
     tests.test_optimize(optimize)
@@ -126,9 +133,9 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     
     if not TESTS_ENABLED:
         saver = tf.train.Saver()
-        print('load')
-        saver.restore(sess, 'model/model84')
-        print('loaded')
+        #print('load')
+        #saver.restore(sess, 'model/model84')
+        #print('loaded')
     for epoch in range(epochs):
         losses = []
         for images, labels in get_batches_fn(batch_size):
@@ -183,7 +190,7 @@ def run():
         logits, train_op, cross_entropy_loss = optimize(layer_output, correct_label, learning_rate, num_classes)
 
         # TODO: Train NN using the train_nn function
-        epochs = 100
+        epochs = 20
         batch_size = 4
 
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
